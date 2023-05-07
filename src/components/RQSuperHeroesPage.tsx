@@ -3,12 +3,12 @@ import { useQuery } from "react-query";
 import { Hero } from "../models/models";
 
 const fetchSuperHeroes = async () => {
-  return axios.get('http://localhost:40002/superheroes');
+  return axios.get('http://localhost:4000/superheroes');
 };
 
 export const RQSuperHeroesPage = () => {
 
-  const { isLoading, data, isError, error } = useQuery('superheroes', fetchSuperHeroes);
+  const { isLoading, data, isError, error } = useQuery('super-heroes', fetchSuperHeroes);
 
   console.log(error)
   console.log(isError)
