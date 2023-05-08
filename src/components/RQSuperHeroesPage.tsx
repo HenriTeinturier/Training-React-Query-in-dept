@@ -14,6 +14,8 @@ const onError = (error) => {
   console.log('onError', error)
 }
 
+// select automatically receives the api data as argument
+
 export const RQSuperHeroesPage = () => {
   const { isLoading, data, isError, error, refetch } = useQuery(
     'super-heroes',
@@ -23,7 +25,13 @@ export const RQSuperHeroesPage = () => {
       // onSuccess: onSuccess,
       // onError: onError
       onSuccess,
-      onError
+      onError,
+      // select: (response) => response.data
+      select: (response) =>{
+        const superHeroNames = response.data.map((hero: Hero) => hero.name);
+        return superHeroNames
+      }
+
     }
     );
 
@@ -41,9 +49,14 @@ export const RQSuperHeroesPage = () => {
     <>
       <h1>RQ Super Heroes Page</h1>
       <button onClick={refetch}>Fetch heroes</button>
-      {
+      {/* {
         data?.data.map( (hero: Hero) => 
           <div>{hero.name}</div>
+        )
+      } */}
+       {
+        data.map( (name: string) => 
+          <div>{name}</div>
         )
       }
     </>
