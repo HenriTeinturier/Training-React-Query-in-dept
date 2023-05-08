@@ -1,10 +1,7 @@
-import axios from "axios";
-import { useQuery } from "react-query";
+import { useSuperHeroesData } from "../hooks/useSuperHeroesData";
 import { Hero } from "../models/models";
 
-const fetchSuperHeroes = async () => {
-  return axios.get('http://localhost:4000/superheroes');
-};
+
 
 const onSuccess = (data) => {
   console.log('onSuccess', data)
@@ -17,23 +14,7 @@ const onError = (error) => {
 // select automatically receives the api data as argument
 
 export const RQSuperHeroesPage = () => {
-  const { isLoading, data, isError, error, refetch } = useQuery(
-    'super-heroes',
-    fetchSuperHeroes,
-    {
-      // since the key ond value is the same, we can just pass the key
-      // onSuccess: onSuccess,
-      // onError: onError
-      onSuccess,
-      onError,
-      // select: (response) => response.data
-      select: (response) =>{
-        const superHeroNames = response.data.map((hero: Hero) => hero.name);
-        return superHeroNames
-      }
-
-    }
-    );
+  const { isLoading, data, isError, error, refetch } = useSuperHeroesData(onSuccess, onError)
 
 
 
@@ -49,14 +30,9 @@ export const RQSuperHeroesPage = () => {
     <>
       <h1>RQ Super Heroes Page</h1>
       <button onClick={refetch}>Fetch heroes</button>
-      {/* {
+      {
         data?.data.map( (hero: Hero) => 
           <div>{hero.name}</div>
-        )
-      } */}
-       {
-        data.map( (name: string) => 
-          <div>{name}</div>
         )
       }
     </>
