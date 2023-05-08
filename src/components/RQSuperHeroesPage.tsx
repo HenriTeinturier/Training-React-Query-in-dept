@@ -6,27 +6,30 @@ const fetchSuperHeroes = async () => {
   return axios.get('http://localhost:4000/superheroes');
 };
 
-// useQuery offert refetch to manually trigger the query.
+const onSuccess = (data) => {
+  console.log('onSuccess', data)
+}
+
+const onError = (error) => {
+  console.log('onError', error)
+}
 
 export const RQSuperHeroesPage = () => {
-  const { isLoading, data, isError, error, isFetching,  refetch } = useQuery(
+  const { isLoading, data, isError, error, refetch } = useQuery(
     'super-heroes',
     fetchSuperHeroes,
     {
-      // cacheTime: default = 5minutes. After 5 minuutes isLoading will restart.
-      // after cacheTime is reached the query is inactive.
-      // staleTime: default = 0s No stale = fetching each time we need data.
-      // refetchOnMount:  if true (default value), the query is called each time the component is mounted/rendered. If false, the query is called only when the component is mounted.
-      //refetchOnWindowFocus:  by defautt true. Each time loses and agins focuns again a call is made. 
-      //refetchInterval:  // by default is false. If number 1000, the query is called each 1000ms. if loseFocus, refetchInterval it's paused. 
-      //refetchIntervalInBackground: by default is false. If true, the query is called each refetchInterval even if the window is not focused.
-      enabled: false, // by default is true. If false, the query is not called.
+      // since the key ond value is the same, we can just pass the key
+      // onSuccess: onSuccess,
+      // onError: onError
+      onSuccess,
+      onError
     }
     );
 
 
 
-  if (isLoading || isFetching) {
+  if (isLoading ) {
     return <h2>loading...</h2>
   }
 
