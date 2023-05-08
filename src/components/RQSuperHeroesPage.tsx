@@ -8,13 +8,17 @@ const fetchSuperHeroes = async () => {
 
 
 export const RQSuperHeroesPage = () => {
-  const { isLoading, data, isError, error, isFetching } = useQuery(
+  const { isLoading, data, isError, error } = useQuery(
     'super-heroes',
     fetchSuperHeroes,
     {
-      // cacheTime: default = 5minutes
-      // staleTime: default = 0s
-      refetchOnMount: false, // if true (default value), the query is called each time the component is mounted/rendered. If false, the query is called only when the component is mounted.
+      // cacheTime: default = 5minutes. After 5 minuutes isLoading will restart.
+      // after cacheTime is reached the query is inactive.
+      // staleTime: default = 0s No stale = fetching each time we need data.
+      // refetchOnMount:  if true (default value), the query is called each time the component is mounted/rendered. If false, the query is called only when the component is mounted.
+      //refetchOnWindowFocus:  by defautt true. Each time loses and agins focuns again a call is made. 
+      refetchInterval: 1000, // by default is false. If true, the query is called each 1000ms. // ! if loseFocus, refetchInterval it's paused. 
+      refetchIntervalInBackground: true // by default is false. If true, the query is called each 1000ms even if the window is not focused.
     }
     );
 
