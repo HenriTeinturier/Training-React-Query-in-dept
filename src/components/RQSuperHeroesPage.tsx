@@ -6,12 +6,19 @@ const fetchSuperHeroes = async () => {
   return axios.get('http://localhost:4000/superheroes');
 };
 
+  //by default the query cache time is 5 minnutes.
+
 export const RQSuperHeroesPage = () => {
+  const { isLoading, data, isError, error, isFetching } = useQuery(
+    'super-heroes',
+    fetchSuperHeroes,
+    {
+      cacheTime: 5000, 
+      // change cacheTime to 5s. After 5s the query becomes inactive.
+    }
+    );
 
-  const { isLoading, data, isError, error } = useQuery('super-heroes', fetchSuperHeroes);
 
-  console.log(error)
-  console.log(isError)
 
   if (isLoading) {
     return <h2>loading...</h2>
@@ -23,7 +30,7 @@ export const RQSuperHeroesPage = () => {
 
   return  (
     <>
-      <h1>React-Query Super Heroes Page</h1>
+      <h1>RQ Super Heroes Page</h1>
       {
         data?.data.map( (hero: Hero) => 
           <div>{hero.name}</div>
