@@ -6,11 +6,11 @@ import { RQSuperHeroesPage } from "./components/RQSuperHeroesPage";
 import { RQSuperHeroPage } from './components/RQSuperHeroPage';
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { ParallelQueriesPage } from "./components/ParallelQueries.page";
 
 function App() {
   const location = useLocation();
   const {pathname} =location;
-  console.log(pathname)
 
   return (
     <QueryClientProvider client={new QueryClient()}>
@@ -50,11 +50,23 @@ function App() {
                 RQ Super Heroes
               </button>
             </Link>
+            <Link to="/rq-parallel">
+              <button
+                style={{
+                  backgroundColor: pathname === "/rq-parallel" ? "#4A50C0" : "",
+                }}
+              >
+                Parallel Queries
+              </button>
+            </Link>
           </nav>
           <Switch>
             
             <Route path="/super-heroes">
               <SuperHeroesPage />
+            </Route>
+            <Route path="/rq-parallel">
+              <ParallelQueriesPage />
             </Route>
             <Route path={`/rq-super-heroes/:heroId`}>
               <RQSuperHeroPage />

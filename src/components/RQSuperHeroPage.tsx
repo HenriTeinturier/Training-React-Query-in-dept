@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 
 export const RQSuperHeroPage = () => {
 
-  const { heroId } = useParams<{heroId}>()
+  const { heroId } = useParams()
 
   const {data, isLoading, error, isError} = useSuperHeroData(heroId)
 
@@ -41,7 +41,7 @@ export const RQSuperHeroPage = () => {
             margin: '10px',
             padding: '10px 15px',
             borderRadius: '5px',
-            width: 'fit-content', 
+            width: '150px', 
             boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.75)',
             display: 'flex',
             flexDirection: 'column',
@@ -49,10 +49,19 @@ export const RQSuperHeroPage = () => {
             justifyContent: 'flex-start',       
           }}
         >
-          <div>
+          <div
+            style={{
+              marginBottom: '10px',
+            }}
+          >
             {data?.data.name}
           </div>
-          <div>
+          <div
+            style={{
+              marginBottom: '10px',
+              fontStyle: 'italic',
+            }}
+          >
             {data?.data.alterEgo}
           </div>
         </div>

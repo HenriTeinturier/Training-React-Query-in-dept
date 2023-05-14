@@ -1,3 +1,3 @@
 export const HomePage = () => {
-  return  <h1>welcome to training React-Query</h1>
+  return  <h3>welcome to training React-Query</h3>
 };
