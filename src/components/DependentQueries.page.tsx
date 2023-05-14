@@ -40,10 +40,10 @@ export const DependentQueriesPage = ({email}: DependentQueriesProps) => {
     }
     <h4>{`Les cours de votre chaîne sont:`}</h4>
     {
-      coursesLoading && <h4>loading...</h4>
+      (coursesLoading && user) && <h4>loading...</h4>
     }
     {
-      courses?.data.courses.map((course: any, index: number) => 
+      user &&  courses?.data.courses.map((course: any, index: number) => 
         
           <div key={index} style={{marginBottom: '10px', color: '#646cff'}}>{course}</div>
         

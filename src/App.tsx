@@ -9,6 +9,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { ParallelQueriesPage } from "./components/ParallelQueries.page";
 import { DynamicParallelQueriesPage } from "./components/DynamixParallelQueryes.page";
 import { DependentQueriesPage } from "./components/DependentQueries.page";
+import { PaginedQueriesPage } from "./components/PaginedQueries.page";
 
 function App() {
   const location = useLocation();
@@ -22,6 +23,7 @@ function App() {
             style= {{
               display: 'flex',
               justifyContent: 'center',
+              flexWrap: 'wrap',
             }}
           >
             <Link to="/">
@@ -79,6 +81,15 @@ function App() {
                 Dependent Queries
               </button>
             </Link>
+            <Link to="/rq-pagined-queries">
+              <button
+                style={{
+                  backgroundColor: pathname === "/rq-pagined-queries" ? "#4A50C0" : "",
+                }}
+              >
+                Pagined Queries
+              </button>
+            </Link>
           </nav>
           <Switch>
             
@@ -100,9 +111,13 @@ function App() {
             <Route path="/rq-dependent-queries">
               <DependentQueriesPage email='henri.teinturier@gmail.com' />
             </Route>
+            <Route path="/rq-pagined-queries">
+              <PaginedQueriesPage />
+            </Route>
             <Route path="/">
               <HomePage />
             </Route>
+            
           </Switch>
         </div>
       {/* </Router> */}
