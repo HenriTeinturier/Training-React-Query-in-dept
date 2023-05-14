@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 
 
 const onSuccess = (data) => {
-  console.log('onSuccess', data)
+  // console.log('onSuccess', data)
 }
 
 const onError = (error) => {
-  console.log('onError', error)
+  // console.log('onError', error)
 }
 
 // select automatically receives the api data as argument
