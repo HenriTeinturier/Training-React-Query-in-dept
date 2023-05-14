@@ -32,5 +32,17 @@
       "name": "Ross",
       "alterEgo": "Ross Geller"
     }
+  ],
+  "users": [
+    {
+      "id": "henri.teinturier@gmail.com",
+      "channelId": "codevolution"
+    }
+  ],
+  "channels": [
+    {
+      "id": "codevolution",
+      "courses": ["react", "vue", "angular"]
+    }
   ]
 }

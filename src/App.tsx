@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { ParallelQueriesPage } from "./components/ParallelQueries.page";
 import { DynamicParallelQueriesPage } from "./components/DynamixParallelQueryes.page";
+import { DependentQueriesPage } from "./components/DependentQueries.page";
 
 function App() {
   const location = useLocation();
@@ -69,6 +70,15 @@ function App() {
                 Dynamic Parallel Queries
               </button>
             </Link>
+            <Link to="/rq-dependent-queries">
+              <button
+                style={{
+                  backgroundColor: pathname === "/rq-dependentQueries" ? "#4A50C0" : "",
+                }}
+              >
+                Dependent Queries
+              </button>
+            </Link>
           </nav>
           <Switch>
             
@@ -86,6 +96,9 @@ function App() {
             </Route>
             <Route path="/rq-super-heroes">
               <RQSuperHeroesPage />
+            </Route>
+            <Route path="/rq-dependent-queries">
+              <DependentQueriesPage email='henri.teinturier@gmail.com' />
             </Route>
             <Route path="/">
               <HomePage />
