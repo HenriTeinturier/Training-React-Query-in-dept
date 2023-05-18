@@ -1,6 +1,6 @@
 import {useQuery, useMutation, useQueryClient} from "react-query";
 import axios from "axios";
-// import { Hero } from "../models/models";
+import { Hero as HeroDTO } from "../models/models";
 
 const fetchSuperHeroes = async () => {
   return axios.get('http://localhost:4000/superheroes');
@@ -33,8 +33,24 @@ export const useAddSuperHeroData = () => {
   return useMutation(
     addSuperHero,
     {
-      onSuccess: () => {
-        queryClient.invalidateQueries('super-heroes');
+      // we can use data to access the data returned by the server on success response
+      onSuccess: (data) => {
+        // invalidateQueries will refetch the data from the server
+        // we remove invalidateQueries for not recall data
+        // instead we change cache directly with setQeueryData
+        // queryClient.invalidateQueries('super-heroes');
+        queryClient.setQueryData(
+          'super-heroes',
+          // ollQueryData is refer to old query cache
+          (oldQueryData: {data: HeroDTO[] }) => {
+            return {
+              ...oldQueryData,
+              // oldQueryData.data contains our cache data
+              // data.data contains the new data returned by the server
+              // so we take oldData and add the new data to it
+              data: [...oldQueryData.data, data.data]
+             }
+          });
       }
     }
   );
