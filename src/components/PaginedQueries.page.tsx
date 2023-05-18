@@ -26,7 +26,7 @@ export const PaginedQueriesPage = () => {
     return <h3>{error.message}</h3>
   }
 
-  console.log(data?.data)
+  console.log(data)
 
   return  (
     <>

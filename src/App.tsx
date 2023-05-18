@@ -10,6 +10,8 @@ import { ParallelQueriesPage } from "./components/ParallelQueries.page";
 import { DynamicParallelQueriesPage } from "./components/DynamixParallelQueryes.page";
 import { DependentQueriesPage } from "./components/DependentQueries.page";
 import { PaginedQueriesPage } from "./components/PaginedQueries.page";
+import { InfiniteQueriesPage } from "./components/InfiniteQueries.page";
+import { InfiniteQueriesScrollPage } from "./components/InfiniteQueriesScroll.page";
 
 function App() {
   const location = useLocation();
@@ -90,6 +92,24 @@ function App() {
                 Pagined Queries
               </button>
             </Link>
+            <Link to="/rq-infinite-queries">
+              <button
+                style={{
+                  backgroundColor: pathname === "/rq-infinite-queries" ? "#4A50C0" : "",
+                }}
+              >
+                Infinite Queries
+              </button>
+            </Link>
+            <Link to="/rq-infinite-queries-scroll">
+              <button
+                style={{
+                  backgroundColor: pathname === "/rq-infinite-queries-scroll" ? "#4A50C0" : "",
+                }}
+              >
+                Infinite Queries Scroll
+              </button>
+            </Link>
           </nav>
           <Switch>
             
@@ -113,6 +133,12 @@ function App() {
             </Route>
             <Route path="/rq-pagined-queries">
               <PaginedQueriesPage />
+            </Route>
+            <Route path="/rq-infinite-queries">
+              <InfiniteQueriesPage />
+            </Route>
+            <Route path="/rq-infinite-queries-scroll">
+              <InfiniteQueriesScrollPage />
             </Route>
             <Route path="/">
               <HomePage />
