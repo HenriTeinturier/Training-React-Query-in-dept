@@ -1,5 +1,6 @@
 import { useQuery } from 'react-query'
 import axios from 'axios'
+import { Hero } from '../models/models'
 
 
 const fetchSuperHeroes = async () => {
@@ -30,7 +31,7 @@ export const ParallelQueriesPage = () => {
           Friends
         </h3>
         {friends &&
-          friends?.data.map((friend) => (
+          friends?.data.map((friend: Hero) => (
             <div
               key={friend.id}
               className="card"
@@ -53,7 +54,7 @@ export const ParallelQueriesPage = () => {
           Superheroes
         </h3>
         {superHeroes &&
-          superHeroes?.data.map((hero) => (
+          superHeroes?.data.map((hero: Hero) => (
             <div
               key={hero.id}
               className="card"

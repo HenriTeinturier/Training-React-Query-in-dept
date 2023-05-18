@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Fragment } from "react";
 
 const fetchColors = ({pageParam = 1}) => {
@@ -7,12 +7,20 @@ const fetchColors = ({pageParam = 1}) => {
   // comme rien n'est envoyé lors de la première requête on défini pageParam à 1 par défaut
   // à la secoonde requête il sera égal à 2 et ainsi de suite
   return axios.get(`http://localhost:4000/colors?_limit=2&_page=${pageParam}`)
+    .then((response) =>{ console.log(response); return response.data})
+    .catch((error: AxiosError) => {
+      throw error
+    });
+}
+type Color = {
+  id: number;
+  name: string
 }
 
 export const InfiniteQueriesPage = () => {
   // hasNextPage est true or false selon la réponse de getNextPage.
   // si undefined cela veut dire qu'il  n'y a plus de page à charger
-  const { data, isLoading, isError, error, hasNextPage, fetchNextPage, isFetching, isFetchingNextPage }  = useInfiniteQuery(
+  const { data, isLoading, isError, error, hasNextPage, fetchNextPage, isFetching, isFetchingNextPage }  = useInfiniteQuery<Color[], AxiosError>(
     ['colorsInfinite'],
     fetchColors,
     {
@@ -53,7 +61,7 @@ export const InfiniteQueriesPage = () => {
             >
               
               {
-                group?.data?.map((color: any) => (
+                group?.map((color: any) => (
                   <div 
                     key={color.id}
                     style={{backgroundColor: color.name, color: 'white', width: '100px', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px', borderRadius: '10px', padding: '10px 5px'}}

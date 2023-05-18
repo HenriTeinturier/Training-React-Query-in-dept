@@ -1,15 +1,24 @@
 import { useInfiniteQuery } from "react-query"
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 import { useInView } from "react-intersection-observer"
 import { useEffect } from "react"
 
 const fetchColors = ({pageParam = 1}) => {
   return axios.get(`http://localhost:4000/colors?_limit=2&_page=${pageParam}`)
+  .then((response) =>{ console.log(response); return response.data})
+  .catch((error: AxiosError) => {
+    throw error
+  });
+}
+
+type Color = {
+  id: number;
+  name: string
 }
 
 export const InfiniteQueriesScrollPage = () => {
   const { ref, inView } = useInView()
-  const { data, isLoading, isError, error, fetchNextPage, hasNextPage, isFetchingNextPage, isFetching } = useInfiniteQuery(
+  const { data, isLoading, isError, error, fetchNextPage, hasNextPage, isFetchingNextPage, isFetching } = useInfiniteQuery<Color[], AxiosError>(
     ['colorsInfiniteScroll'],
     fetchColors,
     {
@@ -52,7 +61,7 @@ export const InfiniteQueriesScrollPage = () => {
             >
               
               {
-                group?.data?.map((color: any) => (
+                group?.map((color) => (
                   <div 
                     key={color.id}
                     style={{backgroundColor: color.name, color: 'white', width: '100px', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px', borderRadius: '10px', padding: '10px 5px'}}

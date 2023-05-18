@@ -1,18 +1,25 @@
+
 import { useSuperHeroData } from "../hooks/useSuperHeroeData"
 import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
+import { AxiosError } from "axios"
 
 export const RQSuperHeroPage = () => {
 
-  const { heroId } = useParams()
+  interface Params {
+    heroId: string
+  }
 
-  const {data, isLoading, error, isError} = useSuperHeroData(heroId)
+  const { heroId } = useParams<Params>()
+  const parsedHeroId = parseInt(heroId, 10);
+
+  const {data: hero, isLoading, error, isError} = useSuperHeroData(parsedHeroId)
 
   if (isLoading) {
     return <h2>loading...</h2>
   }
 
-  if (isError) {
+  if (isError ) {
     return <h2>{error.message}</h2>
   }
 
@@ -54,7 +61,7 @@ export const RQSuperHeroPage = () => {
               marginBottom: '10px',
             }}
           >
-            {data?.data.name}
+            {hero?.name}
           </div>
           <div
             style={{
@@ -62,7 +69,7 @@ export const RQSuperHeroPage = () => {
               fontStyle: 'italic',
             }}
           >
-            {data?.data.alterEgo}
+            {hero?.alterEgo}
           </div>
         </div>
 

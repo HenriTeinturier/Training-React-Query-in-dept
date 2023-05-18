@@ -1,8 +1,11 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { useQueries } from 'react-query'
 
 const fetchSuperHero = async (heroId: number) => {
   return axios.get(`http://localhost:4000/superheroes/${heroId}`)
+    .catch((error: AxiosError) => {
+      throw error
+    });
 }
 
 type DynamicParallelQueriesProps = {
@@ -21,17 +24,17 @@ export const DynamicParallelQueriesPage = ({heroIds}: DynamicParallelQueriesProp
     })
   )
   // useQueries return un tableau des résultats de chaque queries.
-    console.log(queryResults)
+    console.log('queryResult', queryResults)
 
   return (
     <>
       <h3>Dynamic Parallel Queries Page</h3>
       {queryResults.map((result, index) => {
-        const {isLoading, error, data } = result
+        const {isLoading, error, data, isError } = result
         return (
           <div key={index}>
             {isLoading && <h4>loading...</h4>}
-            {error && <h4>{error}</h4>}
+            {isError && <h4>{error.message}</h4>}
             {data && <div style={{marginBottom: '10px', color: '#646cff'}}>{data.data.name}</div>}
           </div>
         )

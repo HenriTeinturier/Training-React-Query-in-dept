@@ -1,16 +1,16 @@
 import { useState } from "react";
-import { useAddSuperHeroData, useDeleteSuperHeroData, useSuperHeroesData } from "../hooks/useSuperHeroesData";
+import { useAddSuperHeroData, useAddSuperHeroDataOptimistic, useDeleteSuperHeroData, useSuperHeroesData } from "../hooks/useSuperHeroesData";
 import { Hero } from "../models/models";
 import { Link } from "react-router-dom";
 import {RemoveCircleIcon} from '@sanity/icons'
 
 
 const onSuccess = (data) => {
-  // console.log('onSuccess', data)
+  console.log('onSuccess', data)
 }
 
 const onError = (error) => {
-  // console.log('onError', error)
+  console.log('onError', error)
 }
 
 // select automatically receives the api data as argument
@@ -18,16 +18,30 @@ const onError = (error) => {
 export const RQSuperHeroesPage = () => {
   const { isLoading, data, isError, error, refetch } = useSuperHeroesData(onSuccess, onError)
   const { mutate: addHero } = useAddSuperHeroData()
+  const { mutate: addHeroOptimistic } = useAddSuperHeroDataOptimistic()
   const { mutate: deleteHero } = useDeleteSuperHeroData()
 
   const [name, setName] = useState<string>('')
   const [alterEgo, setAlterEgo] = useState<string>('')
+  const [nameOptimistic, setNameOptimistic] = useState<string>('')
+  const [alterEgoOptimistic, setAlterEgoOptimistic] = useState<string>('')
 
   const handleAddHeroClick = () => {
     console.log(name, alterEgo)
     const hero = {name, alterEgo}
     addHero(hero)
     handleResetForm()
+  }
+  const handleAddHeroOptimisticClick = () => {
+    console.log(nameOptimistic, alterEgoOptimistic)
+    const hero = {name: nameOptimistic, alterEgo: alterEgoOptimistic}
+    addHeroOptimistic(hero)
+    handleResetFormOptimistic()
+  }
+
+  const handleResetFormOptimistic = () => {
+    setNameOptimistic('')
+    setAlterEgoOptimistic('')
   }
 
   const handleResetForm = () => {
@@ -73,8 +87,30 @@ export const RQSuperHeroesPage = () => {
           Add Hero
         </button>
       </div>
+      <div style={{marginBottom: '12px'}}>
+        <input
+          className="inputHero"
+          type="text"
+          value={nameOptimistic}
+          placeholder="Add Super Hero Name"
+          onChange={(e) => setNameOptimistic(e.target.value)}
+        />
+        <input
+          type="text"
+          className="inputHero"
+          value={alterEgoOptimistic}
+          placeholder="Add Super Hero Alter Ego"
+          onChange={(e) => setAlterEgoOptimistic(e.target.value)}
+        />
+        <button
+          onClick={handleAddHeroOptimisticClick}
+          style={{margin: '10px'}}
+        >
+          Add Hero
+        </button>
+      </div>
       <button 
-        onClick={refetch}
+        onClick={() => refetch()}
         style={{marginBottom: '20px'}}
       >
         Fetch heroes

@@ -1,14 +1,23 @@
 import { useQuery } from 'react-query'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { useState } from 'react'
 
-const fetchColors = (pageNumber) => {
+const fetchColors = (pageNumber: number | undefined) => {
   return axios.get(`http://localhost:4000/colors?_limit=2&_page=${pageNumber}`)
+  .then((response) =>{ console.log(response); return response.data})
+  .catch((error: AxiosError) => {
+    throw error
+  });
+}
+
+type Color = {
+  id: number;
+  name: string
 }
 
 export const PaginedQueriesPage = () => {
   const [pageNumber, setPageNumber] = useState(1)
-  const { data, isLoading, isError, error, isFetching } = useQuery(
+  const { data, isLoading, isError, error, isFetching } = useQuery<Color[], AxiosError>(
     ['colors', pageNumber],
     () => fetchColors(pageNumber),
     {
@@ -32,7 +41,7 @@ export const PaginedQueriesPage = () => {
     <>
       <h3>PaginedQueriesPage</h3>
       <div style={{display: 'flex', justifyContent: 'center'}}>
-        {data?.data.map((color: any) => 
+        {data?.map((color: any) => 
           <div
             key={color.id} 
             style={{backgroundColor: color.name, color: 'white', width: '100px', display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '10px', borderRadius: '10px', padding: '10px 5px'}}
