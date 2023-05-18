@@ -27,6 +27,12 @@ export const RQSuperHeroesPage = () => {
     console.log(name, alterEgo)
     const hero = {name, alterEgo}
     addHero(hero)
+    handleResetForm()
+  }
+
+  const handleResetForm = () => {
+    setName('')
+    setAlterEgo('')
   }
 
   const handleDeleteHeroClick = (heroId: number) => {
