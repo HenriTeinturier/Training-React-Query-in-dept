@@ -106,7 +106,7 @@ export const RQSuperHeroesPage = () => {
           onClick={handleAddHeroOptimisticClick}
           style={{margin: '10px'}}
         >
-          Add Hero
+          Add Hero Optimistic
         </button>
       </div>
       <button 
