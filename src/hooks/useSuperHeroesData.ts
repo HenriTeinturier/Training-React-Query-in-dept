@@ -12,6 +12,10 @@ const addSuperHero = async (hero:Hero) => {
   return axios.post(`http://localhost:4000/superheroes`, hero);
 };
 
+const deleteSuperHero = async (heroId: number) => {
+  return axios.delete(`http://localhost:4000/superheroes/${heroId}`);
+}
+
 
 export const useSuperHeroesData = (onSuccess, onError) => {
   return useQuery(
@@ -27,5 +31,11 @@ export const useSuperHeroesData = (onSuccess, onError) => {
 export const useAddSuperHeroData = () => {
   return useMutation(
     addSuperHero,
+  );
+}
+
+export const useDeleteSuperHeroData = () => {
+  return useMutation(
+    deleteSuperHero,
   );
 }

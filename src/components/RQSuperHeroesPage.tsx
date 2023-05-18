@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useAddSuperHeroData, useSuperHeroesData } from "../hooks/useSuperHeroesData";
+import { useAddSuperHeroData, useDeleteSuperHeroData, useSuperHeroesData } from "../hooks/useSuperHeroesData";
 import { Hero } from "../models/models";
 import { Link } from "react-router-dom";
-
+import {RemoveCircleIcon} from '@sanity/icons'
 
 
 const onSuccess = (data) => {
@@ -18,6 +18,7 @@ const onError = (error) => {
 export const RQSuperHeroesPage = () => {
   const { isLoading, data, isError, error, refetch } = useSuperHeroesData(onSuccess, onError)
   const { mutate: addHero } = useAddSuperHeroData()
+  const { mutate: deleteHero } = useDeleteSuperHeroData()
 
   const [name, setName] = useState<string>('')
   const [alterEgo, setAlterEgo] = useState<string>('')
@@ -26,6 +27,11 @@ export const RQSuperHeroesPage = () => {
     console.log(name, alterEgo)
     const hero = {name, alterEgo}
     addHero(hero)
+  }
+
+  const handleDeleteHeroClick = (heroId: number) => {
+
+    deleteHero(heroId)
   }
 
   if (isLoading ) {
@@ -69,14 +75,30 @@ export const RQSuperHeroesPage = () => {
       </button>
       {
         data?.data.map( (hero: Hero) => 
-          <Link to={`/rq-super-heroes/${hero.id}`}>
-            <div 
-              key={hero.id}
-              style={{cursor: 'pointer', marginBottom: '10px'}}
-            >
-              {hero.name}
+          
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+              <Link to={`/rq-super-heroes/${hero.id}`}>
+                <div 
+                  key={hero.id}
+                  style={{cursor: 'pointer', marginBottom: '10px', width: '300px', textAlign: 'center'}}
+                >
+                  {hero.name}
+                </div>
+              </Link>
+              <div 
+                style={{width: '100px'}}
+                onClick={() => handleDeleteHeroClick(hero.id)}
+              >
+                <RemoveCircleIcon 
+                  style={{
+                    marginLeft: '30px', 
+                    fontSize: '30px', 
+                    marginBottom: '10px', 
+                    cursor: 'pointer'
+                  }} 
+                />
+              </div>
             </div>
-          </Link>
         )
       }
     </>
