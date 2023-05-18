@@ -74,6 +74,27 @@ button {
 button:hover {
   border-color: #646cff;
 }
+
+input {
+  border: 1px solid #1a1a1a;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  padding: 1em 1.2em;
+  margin: 12px;
+  transition:  0.25s;
+
+}
+input:hover, input:focus {
+  transition:  0.25s;
+
+  border: 1px solid #646cff!important;
+
+}
+
+input:focus {
+  border: 1px solid #646cff!important;
+}
+
 button:focus,
 button:focus-visible {
   // outline: 4px auto -webkit-focus-ring-color;
